@@ -5,6 +5,7 @@ import {HttpClientModule} from "@angular/common/http";
 import {NgxUiLoaderConfig, NgxUiLoaderModule} from "ngx-ui-loader";
 import {FormsModule} from "@angular/forms";
 import {NgSelectModule} from "@ng-select/ng-select";
+import {DecimalPipe} from "@angular/common";
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   "bgsColor": "red",
@@ -48,7 +49,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
     FormsModule,
   ],
-  providers: [],
+  providers: [DecimalPipe],
   bootstrap: [AppComponent]
 })
 export class AppModule {

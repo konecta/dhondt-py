@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {AppService} from "./app.service";
+import {DecimalPipe} from "@angular/common";
 
 @Component({
   selector: 'app-root',
@@ -12,7 +13,8 @@ export class AppComponent implements OnInit {
   seleccionado: any;
   lista: any[] = [];
 
-  constructor(private service: AppService) {
+  constructor(private service: AppService,
+              private decimalPipe: DecimalPipe) {
   }
 
   ngOnInit(): void {
@@ -262,7 +264,7 @@ export class AppComponent implements OnInit {
       let candidatosPrefDTOS = candidatosPriorizados.get(partido[o]);
       // @ts-ignore
       const candidato: CandidatosPrefDTO = candidatosPrefDTOS.shift();
-      this.candidatos.push(`${c} - ${candidato?.nomCandidato} (${candidato?.desPartido})\n`);
+      this.candidatos.push(`${c} - ${candidato?.nomCandidato} (${this.decimalPipe.transform(candidato.votos)?.replace(/,/g,'.')}) (${candidato?.desPartido})\n`);
     }
 
     console.log(this.candidatos.join(''));
@@ -270,7 +272,7 @@ export class AppComponent implements OnInit {
     console.log(allocated);
 
     for (let p = 0; p < votos.length; p++) {
-      this.resumen.push(`Partido: ${partidos.get(partido[p])} obtiene ${allocated[p]} escaños\n`);
+      this.resumen.push(`Partido: ${partidos.get(partido[p])} obtiene ${allocated[p]} bancas\n`);
     }
 
     console.log(this.resumen.join(''));
