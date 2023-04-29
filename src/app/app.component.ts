@@ -8,13 +8,22 @@ import {DecimalPipe} from "@angular/common";
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+  horaActual: Date;
+
+  get votacionFinalizada(): boolean {
+    return this._votacionFinalizada;
+  }
+
   candidatos: string[] = [];
   resumen: string[] = [];
   seleccionado: any;
   lista: any[] = [];
+  private _votacionFinalizada: boolean = false;
+  faltan: string = '';
 
   constructor(private service: AppService,
               private decimalPipe: DecimalPipe) {
+    this.horaActual = new Date();
   }
 
   ngOnInit(): void {
@@ -207,6 +216,34 @@ export class AppComponent implements OnInit {
         nombre: 'DIPUTADOS BOQUERON'
       }
     );
+    this.service.getDate().subscribe(response => {
+      let targetTime = new Date("2023-04-30T16:00:01-04:00");
+      let horaPy = new Date(response.datetime);
+      let horaActual = new Date();
+      let offset = horaActual.getTime() - horaPy.getTime();
+      this.countdown(targetTime, offset);
+    });
+  }
+
+  countdown(targetTime: Date, offset: number) {
+    this._votacionFinalizada = false;
+
+    let timerId = setInterval(() => {
+      let now = new Date().getTime() - offset;
+      this.horaActual = new Date(now);
+      let distance = targetTime.getTime() - now;
+      let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      if (distance < 0) {
+        this._votacionFinalizada = true;
+        clearInterval(timerId);
+      } else {
+        this._votacionFinalizada = false;
+        this.faltan = (`${days} días, ${hours} horas, ${minutes} minutos, ${seconds} segundos`);
+      }
+    }, 1000);
   }
 
   refresh(): void {
@@ -265,7 +302,7 @@ export class AppComponent implements OnInit {
       let candidatosPrefDTOS = candidatosPriorizados.get(partido[o]);
       // @ts-ignore
       const candidato: CandidatosPrefDTO = candidatosPrefDTOS.shift();
-      this.candidatos.push(`${c} - ${candidato?.nomCandidato} con (${this.decimalPipe.transform(candidato.votos)?.replace(/,/g,'.')}) votos del (${candidato?.desPartido})\n`);
+      this.candidatos.push(`${c} - ${candidato?.nomCandidato} con (${this.decimalPipe.transform(candidato.votos)?.replace(/,/g, '.')}) votos del (${candidato?.desPartido})\n`);
     }
 
     console.log(this.candidatos.join(''));

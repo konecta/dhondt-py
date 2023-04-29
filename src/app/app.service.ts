@@ -31,4 +31,17 @@ export class AppService {
     );
   }
 
+  getDate(): Observable<any> {
+    this.blockUI();
+    return this.http.get('https://worldtimeapi.org/api/timezone/America/Asuncion',).pipe(
+      catchError((e) => {
+        console.log(e);
+        return EMPTY;
+      }),
+      finalize(() => {
+        this.unblockUI();
+      })
+    );
+  }
+
 }

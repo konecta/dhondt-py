@@ -1,15 +1,29 @@
 <ngx-ui-loader></ngx-ui-loader>
 <div class="container mt-3">
 
-
+  Seleccioná una candidatura.
   <ng-select [items]="lista"
+             [disabled]="!votacionFinalizada"
              bindLabel="nombre"
              (change)="refresh()"
              [(ngModel)]="seleccionado">
   </ng-select>
 
+  <span class="mt-4"
+    *ngIf="!votacionFinalizada"> El seleccionador se habilitará a las <strong>16:00:01 del 30/04/2023 (Paraguay)</strong>
+  </span>
 
-  <div class="row mt-3">
+  <br>
+
+  <span *ngIf="!votacionFinalizada">Hora actual en Paraguay: <strong>{{horaActual}}</strong>
+  </span>
+
+  <br>
+  <span *ngIf="!votacionFinalizada">Faltan: <strong>{{faltan}}</strong>
+  </span>
+  <br>
+
+  <div class="row mt-3" *ngIf="votacionFinalizada">
 
     <div class="col-lg-6">
       <h2>Lista:</h2>
@@ -24,5 +38,18 @@
         {{x}}
       </li>
     </div>
+  </div>
+  <div class="alert alert-info mt-3" role="alert">
+    Observaciones:
+    <li> Los datos visualizados en pantalla no representan una boca de urna ni una encuesta, son datos provenientes del
+      TSJE y su web de <a href="https://resultados.tsje.gov.py">resultados</a> a los cuales se aplicó el Sistema D'Hondt
+      para el cálculo de bancas.
+    </li>
+    <li> Los datos visualizados en pantalla están basados en el TREP y por lo tanto son aproximados, la lista final será
+      publicada oficialmente por el TSJE luego de finalizado el juzgamiento de actas.
+    </li>
+    <li>
+      Hecho con amor en <a href="https://www.konecta.com.py">KONECTA S.A. </a>
+    </li>
   </div>
 </div>
