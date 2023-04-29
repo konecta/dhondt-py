@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.lista.push(
       {
-        codeleccion: 29,
+        codeleccion: 37,
         candidatura: 2,
         escanos: 45,
         nombre: 'SENADORES',
@@ -29,7 +29,7 @@ export class AppComponent implements OnInit {
 
     this.lista.push(
       {
-        codeleccion: 29,
+        codeleccion: 37,
         candidatura: 3,
         departamento: 0,
         escanos: 7,
@@ -39,7 +39,7 @@ export class AppComponent implements OnInit {
 
     this.lista.push(
       {
-        codeleccion: 29,
+        codeleccion: 37,
         candidatura: 3,
         departamento: 11,
         escanos: 20,
@@ -49,7 +49,7 @@ export class AppComponent implements OnInit {
 
     this.lista.push(
       {
-        codeleccion: 29,
+        codeleccion: 37,
         candidatura: 3,
         departamento: 1,
         escanos: 3,
@@ -59,7 +59,7 @@ export class AppComponent implements OnInit {
 
     this.lista.push(
       {
-        codeleccion: 29,
+        codeleccion: 37,
         candidatura: 3,
         departamento: 2,
         escanos: 5,
@@ -69,7 +69,7 @@ export class AppComponent implements OnInit {
 
     this.lista.push(
       {
-        codeleccion: 29,
+        codeleccion: 37,
         candidatura: 3,
         departamento: 3,
         escanos: 4,
@@ -79,7 +79,7 @@ export class AppComponent implements OnInit {
 
     this.lista.push(
       {
-        codeleccion: 29,
+        codeleccion: 37,
         candidatura: 3,
         departamento: 4,
         escanos: 3,
@@ -89,7 +89,7 @@ export class AppComponent implements OnInit {
 
     this.lista.push(
       {
-        codeleccion: 29,
+        codeleccion: 37,
         candidatura: 3,
         departamento: 5,
         escanos: 6,
@@ -99,7 +99,7 @@ export class AppComponent implements OnInit {
 
     this.lista.push(
       {
-        codeleccion: 29,
+        codeleccion: 37,
         candidatura: 3,
         departamento: 6,
         escanos: 2,
@@ -109,7 +109,7 @@ export class AppComponent implements OnInit {
 
     this.lista.push(
       {
-        codeleccion: 29,
+        codeleccion: 37,
         candidatura: 3,
         departamento: 7,
         escanos: 6,
@@ -119,7 +119,7 @@ export class AppComponent implements OnInit {
 
     this.lista.push(
       {
-        codeleccion: 29,
+        codeleccion: 37,
         candidatura: 3,
         departamento: 8,
         escanos: 2,
@@ -129,7 +129,7 @@ export class AppComponent implements OnInit {
 
     this.lista.push(
       {
-        codeleccion: 29,
+        codeleccion: 37,
         candidatura: 3,
         departamento: 9,
         escanos: 4,
@@ -139,7 +139,7 @@ export class AppComponent implements OnInit {
 
     this.lista.push(
       {
-        codeleccion: 29,
+        codeleccion: 37,
         candidatura: 3,
         departamento: 10,
         escanos: 8,
@@ -150,7 +150,7 @@ export class AppComponent implements OnInit {
 
     this.lista.push(
       {
-        codeleccion: 29,
+        codeleccion: 37,
         candidatura: 3,
         departamento: 12,
         escanos: 2,
@@ -160,7 +160,7 @@ export class AppComponent implements OnInit {
 
     this.lista.push(
       {
-        codeleccion: 29,
+        codeleccion: 37,
         candidatura: 3,
         departamento: 13,
         escanos: 2,
@@ -170,7 +170,7 @@ export class AppComponent implements OnInit {
 
     this.lista.push(
       {
-        codeleccion: 29,
+        codeleccion: 37,
         candidatura: 3,
         departamento: 14,
         escanos: 2,
@@ -180,7 +180,7 @@ export class AppComponent implements OnInit {
 
     this.lista.push(
       {
-        codeleccion: 29,
+        codeleccion: 37,
         candidatura: 3,
         departamento: 15,
         escanos: 2,
@@ -190,7 +190,7 @@ export class AppComponent implements OnInit {
 
     this.lista.push(
       {
-        codeleccion: 29,
+        codeleccion: 37,
         candidatura: 3,
         departamento: 16,
         escanos: 1,
@@ -200,7 +200,7 @@ export class AppComponent implements OnInit {
 
     this.lista.push(
       {
-        codeleccion: 29,
+        codeleccion: 37,
         candidatura: 3,
         departamento: 17,
         escanos: 1,
@@ -235,6 +235,7 @@ export class AppComponent implements OnInit {
       const queue: Array<any> = new Array<any>();
 
       for (const candidatosPrefDTO of candidato.candidatosPref) {
+        candidatosPrefDTO.desPartido = candidato.desPartido;
         queue.push(candidatosPrefDTO);
       }
 
