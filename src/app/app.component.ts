@@ -265,7 +265,7 @@ export class AppComponent implements OnInit {
       let candidatosPrefDTOS = candidatosPriorizados.get(partido[o]);
       // @ts-ignore
       const candidato: CandidatosPrefDTO = candidatosPrefDTOS.shift();
-      this.candidatos.push(`${c} - ${candidato?.nomCandidato} (${this.decimalPipe.transform(candidato.votos)?.replace(/,/g,'.')}) (${candidato?.desPartido})\n`);
+      this.candidatos.push(`${c} - ${candidato?.nomCandidato} con (${this.decimalPipe.transform(candidato.votos)?.replace(/,/g,'.')}) votos del (${candidato?.desPartido})\n`);
     }
 
     console.log(this.candidatos.join(''));
