@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --configuration production --base-href=/dhondt-py/ --deploy-url=/dhondt-py/ --delete-output-path --output-path=dhondt-py/dist",
+    "build": "ng build --configuration production --base-href=/ --deploy-url=/ --delete-output-path --output-path=dhondt-py/dist",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },

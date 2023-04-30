@@ -2,26 +2,37 @@
 <div class="container mt-3">
 
   Seleccioná una candidatura.
-  <ng-select [items]="lista"
-             [disabled]="!votacionFinalizada"
-             bindLabel="nombre"
-             (change)="refresh()"
-             [(ngModel)]="seleccionado">
-  </ng-select>
+  <div class="row">
+    <div class="col-11">
+      <ng-select [items]="lista"
+                 [disabled]="!votacionFinalizada"
+                 bindLabel="nombre"
+                 (change)="refresh()"
+                 [(ngModel)]="seleccionado">
+      </ng-select>
+    </div>
+    <div class="col-1">
+      <button class="btn btn-primary" [disabled]="deshabilitar || !seleccionado" (click)="refresh()"> Actualizar
+      </button>
+    </div>
+  </div>
 
-  <span class="mt-4"
-    *ngIf="!votacionFinalizada"> El seleccionador se habilitará a las <strong>16:00:01 del 30/04/2023 (Paraguay)</strong>
-  </span>
+<!--  <span class="mt-4"-->
+<!--        *ngIf="!votacionFinalizada"> El seleccionador se habilitará a las <strong>17:00:01 del 30/04/2023 (Paraguay)</strong>-->
+<!--  </span>-->
 
+<!--  <br>-->
+
+<!--  <span *ngIf="!votacionFinalizada">Hora actual en Paraguay: <strong>{{horaActual}}</strong>-->
+<!--  </span>-->
+
+<!--  <br>-->
+<!--  <span *ngIf="!votacionFinalizada">Faltan: <strong>{{faltan}}</strong>-->
+<!--  </span>-->
+<!--  <br>-->
+  Mesas: {{mesas}}
   <br>
-
-  <span *ngIf="!votacionFinalizada">Hora actual en Paraguay: <strong>{{horaActual}}</strong>
-  </span>
-
-  <br>
-  <span *ngIf="!votacionFinalizada">Faltan: <strong>{{faltan}}</strong>
-  </span>
-  <br>
+  Escaños: {{escanos}}
 
   <div class="row mt-3" *ngIf="votacionFinalizada">
 
@@ -34,8 +45,8 @@
 
     <div class="col-lg-6">
       <h2>Resumen:</h2>
-      <li *ngFor="let x of resumen;" style="list-style: none">
-        {{x}}
+      <li *ngFor="let x of resumen; let i = index" style="list-style: none">
+        {{i + 1}} - {{x.descripcion}}
       </li>
     </div>
   </div>

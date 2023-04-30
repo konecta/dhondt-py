@@ -9,16 +9,19 @@ import {DecimalPipe} from "@angular/common";
 })
 export class AppComponent implements OnInit {
   horaActual: Date;
+  mesas: string = '';
+  escanos: string = '';
 
   get votacionFinalizada(): boolean {
     return this._votacionFinalizada;
   }
 
   candidatos: string[] = [];
-  resumen: string[] = [];
+  deshabilitar: boolean = false;
+  resumen: any[] = [];
   seleccionado: any;
   lista: any[] = [];
-  private _votacionFinalizada: boolean = false;
+  private _votacionFinalizada: boolean = true;
   faltan: string = '';
 
   constructor(private service: AppService,
@@ -216,17 +219,29 @@ export class AppComponent implements OnInit {
         nombre: 'DIPUTADOS BOQUERON'
       }
     );
-    this.service.getDate().subscribe(response => {
-      let targetTime = new Date("2023-04-30T16:00:01-04:00");
-      let horaPy = new Date(response.datetime);
-      let horaActual = new Date();
-      let offset = horaActual.getTime() - horaPy.getTime();
-      this.countdown(targetTime, offset);
-    });
+
+    this.lista.push(
+      {
+        codeleccion: 37,
+        candidatura: 5,
+        departamento: 11,
+        escanos: 21,
+        nombre: 'JUNTA DEPARTAMENTAL CENTRAL'
+      }
+    );
+
+    // this.service.getDate().subscribe(response => {
+    //   let targetTime = new Date("2023-04-30T17:00:01-04:00");
+    //   let horaPy = new Date(response.datetime);
+    //   let horaActual = new Date();
+    //   let offset = horaActual.getTime() - horaPy.getTime();
+    //   this.countdown(targetTime, offset);
+    // });
   }
 
   countdown(targetTime: Date, offset: number) {
     this._votacionFinalizada = false;
+    this.deshabilitar = false;
 
     let timerId = setInterval(() => {
       let now = new Date().getTime() - offset;
@@ -238,15 +253,19 @@ export class AppComponent implements OnInit {
       let seconds = Math.floor((distance % (1000 * 60)) / 1000);
       if (distance < 0) {
         this._votacionFinalizada = true;
+        this.deshabilitar = false;
         clearInterval(timerId);
       } else {
         this._votacionFinalizada = false;
+        this.deshabilitar = false;
         this.faltan = (`${days} días, ${hours} horas, ${minutes} minutos, ${seconds} segundos`);
       }
     }, 1000);
   }
 
   refresh(): void {
+    this.mesas = '';
+    this.escanos = '';
     this.resumen = [];
     this.candidatos = [];
     let dato: any = {...this.seleccionado};
@@ -254,10 +273,15 @@ export class AppComponent implements OnInit {
     delete dato.nombre;
     this.service.executeGet(dato).subscribe(responseG => {
       this.doJob(responseG, this.seleccionado.escanos);
+      this.mesas = responseG.totales.mesasPublicadas + '/' + responseG.totales.totalMesas;
+      this.escanos = this.seleccionado.escanos;
     });
   }
 
   doJob(item: any, escanos: number) {
+    this.deshabilitar = true;
+    let partidosFinal: any[] = [];
+
     const candidatosPriorizados = new Map<number, Array<any>>();
     const partidos = new Map<number, string>();
 
@@ -305,15 +329,24 @@ export class AppComponent implements OnInit {
       this.candidatos.push(`${c} - ${candidato?.nomCandidato} con (${this.decimalPipe.transform(candidato.votos)?.replace(/,/g, '.')}) votos del (${candidato?.desPartido})\n`);
     }
 
-    console.log(this.candidatos.join(''));
+    // console.log(this.candidatos.join(''));
 
-    console.log(allocated);
-
+    // console.log(allocated);
     for (let p = 0; p < votos.length; p++) {
-      this.resumen.push(`Partido: ${partidos.get(partido[p])} obtiene ${allocated[p]} bancas\n`);
+      this.resumen.push({
+          cantidad: allocated[p],
+          descripcion: `${partidos.get(partido[p])} obtiene ${allocated[p]} bancas\n`
+        }
+      );
     }
+    this.resumen.sort((a, b) => b.cantidad - a.cantidad);
 
-    console.log(this.resumen.join(''));
+    // console.log(this.resumen.join(''));
+
+    setTimeout(() => {
+      console.log('timeou')
+      this.deshabilitar = false; // habilita el botón después de 1 minuto
+    }, 60000);
   }
 
   getMaxElement(dTable: number[][], pN: number, pM: number): number {
