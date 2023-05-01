@@ -1,0 +1,10 @@
+{
+  "/publicacion/*": {
+    "target": "https://resultados.tsje.gov.py",
+    "secure": true,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/publicacion": "/publicacion"
+    }
+  }
+}

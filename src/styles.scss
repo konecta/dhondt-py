@@ -1,0 +1,9 @@
+@import "~@ng-select/ng-select/themes/default.theme.css";
+
+@font-face {
+  font-family: "Avenir";
+  src: local("Avenir"), url(./assets/fonts/AvenirLTStd-Book.otf) format("truetype");
+}
+* {
+  font-family: "Avenir";
+}
